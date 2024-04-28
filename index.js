@@ -29,24 +29,24 @@ async function run() {
         await client.connect();
         const craftCollection = client.db('painting').collection('craft');
 
-       
-        app.get('/craft' , async(req , res)=>{
+
+        app.get('/craft', async (req, res) => {
             const result = await craftCollection.find().toArray();
             res.send(result);
         })
 
-        app.get('/craft/:id' , async(req , res)=>{
+        app.get('/myArtCrftItem/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id : new ObjectId(id)}
+            const query = { _id: new ObjectId(id) }
             const result = await craftCollection.findOne(query);
             res.send(result);
         })
 
-        app.get('/craft/:email' , async(req , res)=>{
-           const email = req.params.email;
-           const query = {email : email}
-           const result = await craftCollection.find(query).toArray()
-           res.send(result)
+        app.get('/craft/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email }
+            const result = await craftCollection.find(query).toArray()
+            res.send(result)
         })
 
 
@@ -54,6 +54,39 @@ async function run() {
             const addCraft = req.body;
             console.log(addCraft);
             const result = await craftCollection.insertOne(addCraft);
+            res.send(result)
+        })
+
+        app.put('/myArtCrftItem/:id', async (req, res) => {
+            const updateInfo = req.body;
+            console.log(updateInfo)
+            const id = req.params.id;
+            console.log(id)
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                  image:updateInfo.image,
+                  item:updateInfo.item,
+                  email:updateInfo.email,
+                  name:updateInfo.name,
+                  stock:updateInfo.stock,
+                  time:updateInfo.time,
+                  description:updateInfo.description,
+                  customization:updateInfo.customization,
+                  ratting:updateInfo.ratting,
+                  price:updateInfo.price
+
+                },
+              };
+              const result = await craftCollection.updateOne(filter, updateDoc, options);
+              res.send(result);
+        })
+
+        app.delete('/myArtCrftItem/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id : new ObjectId(id)}
+            const result = await craftCollection.deleteOne(query);
             res.send(result)
         })
 
