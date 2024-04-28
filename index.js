@@ -64,6 +64,14 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/subcategories/subcategory/:id' , async(req , res)=>{
+            const id = req.params.id;
+            console.log(id)
+            const query = {_id : new ObjectId(id)};
+            const result = await categoriesCollection.findOne(query);
+            res.send(result)
+        })
+
 
 
         app.post('/craft', async (req, res) => {
