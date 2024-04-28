@@ -28,6 +28,9 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const craftCollection = client.db('painting').collection('craft');
+        const categoryHeadingCollection = client.db('painting').collection('category-heading');
+        const categoriesCollection = client.db('painting').collection('categories');
+
 
 
         app.get('/craft', async (req, res) => {
@@ -48,6 +51,19 @@ async function run() {
             const result = await craftCollection.find(query).toArray()
             res.send(result)
         })
+
+        app.get('/categoriesHeading' , async(req , res)=>{
+            const result = await categoryHeadingCollection.find().toArray();
+            res.send(result)
+        })
+
+        app.get('/subcategories/:subcategory' , async(req , res)=>{
+            const subcategory = req.params.subcategory;
+            const query = {subcategory_name : subcategory};
+            const result = await categoriesCollection.find(query).toArray();
+            res.send(result)
+        })
+
 
 
         app.post('/craft', async (req, res) => {
