@@ -45,10 +45,6 @@ async function run() {
             res.send(result);
         })
 
-        // app.get('/allArtAndCraftItem/:id' , async(req , res)=>{
-
-        // })
-
         app.get('/craft/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email }
