@@ -12,7 +12,7 @@ app.use(express.json())
 
 
 
-const uri = "mongodb+srv://rabi:BlE9znk8xEOBrwo1@cluster0.rjjtc94.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = `mongodb+srv://${process.env.DB_user}:${process.env.DB_pass}@cluster0.rjjtc94.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -44,6 +44,10 @@ async function run() {
             const result = await craftCollection.findOne(query);
             res.send(result);
         })
+
+        // app.get('/allArtAndCraftItem/:id' , async(req , res)=>{
+
+        // })
 
         app.get('/craft/:email', async (req, res) => {
             const email = req.params.email;
