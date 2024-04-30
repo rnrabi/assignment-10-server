@@ -66,7 +66,7 @@ async function run() {
 
         app.get('/subcategories/subcategory/:id' , async(req , res)=>{
             const id = req.params.id;
-            console.log(id)
+            // console.log(id)
             const query = {_id : new ObjectId(id)};
             const result = await categoriesCollection.findOne(query);
             res.send(result)
@@ -76,16 +76,16 @@ async function run() {
 
         app.post('/craft', async (req, res) => {
             const addCraft = req.body;
-            console.log(addCraft);
+            // console.log(addCraft);
             const result = await craftCollection.insertOne(addCraft);
             res.send(result)
         })
 
         app.put('/myArtCrftItem/:id', async (req, res) => {
             const updateInfo = req.body;
-            console.log(updateInfo)
+            // console.log(updateInfo)
             const id = req.params.id;
-            console.log(id)
+            // console.log(id)
             const filter = { _id: new ObjectId(id) };
             const options = { upsert: true };
             const updateDoc = {
@@ -113,8 +113,6 @@ async function run() {
             const result = await craftCollection.deleteOne(query);
             res.send(result)
         })
-
-
 
 
 
